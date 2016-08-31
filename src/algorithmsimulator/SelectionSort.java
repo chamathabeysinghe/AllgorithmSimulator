@@ -6,6 +6,7 @@
 package algorithmsimulator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class SelectionSort  {
      
     List<String> lines=new ArrayList<>();   //code lines to print
     HashMap<String,String> variableList=new HashMap<>();    //variable lines to print
+    List<String> stepSolutions=new ArrayList<>();
+    
     int sortArray[];
     int selectedIndex1=-1;//for i
     int selectedIndex2=-1;//for j
@@ -38,6 +41,7 @@ public class SelectionSort  {
         sortArray=array;
         arr_algo=array;
         addLines();
+        stepSolutions.add(Arrays.toString(arr_algo));
     }
     
     
@@ -139,6 +143,7 @@ public class SelectionSort  {
         }
         else if(currentLine==10){
             arr_algo[i_algo]=smallNumber_algo;
+            stepSolutions.add(Arrays.toString(arr_algo));
             currentLine=1;
             variableList.remove("smallNumber");      
             variableList.remove("index");

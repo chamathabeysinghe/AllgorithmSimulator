@@ -19,7 +19,7 @@ public class AlgorithmSimulator {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int array[]={3,2,1};
+        int array[]={3,2,1,4,5,2};
         Simulator.main(array);
 //        SelectionSort s=new SelectionSort(array);
 //        Scanner sc = new Scanner(System.in);
