@@ -32,7 +32,7 @@ public class SelectionSort  {
     int i_algo;
     int j_algo;
     int smallNumber_algo;
-    
+    boolean selectSwapNumber=false;
     
     int currentLine=0;
     int previousLine=-1;
@@ -134,6 +134,7 @@ public class SelectionSort  {
         else if(currentLine==8){
             smallNumber_algo=arr_algo[index_algo];
             variableList.put("smallNumber", String.valueOf(smallNumber_algo));
+            selectSwapNumber=true;
             currentLine=9;
         }
         
@@ -145,7 +146,8 @@ public class SelectionSort  {
             arr_algo[i_algo]=smallNumber_algo;
             stepSolutions.add(Arrays.toString(arr_algo));
             currentLine=1;
-            variableList.remove("smallNumber");      
+            variableList.remove("smallNumber"); 
+            selectSwapNumber=false;
             variableList.remove("index");
             selectedIndex3=-1;
 

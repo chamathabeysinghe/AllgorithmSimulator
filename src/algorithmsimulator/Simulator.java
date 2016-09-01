@@ -5,7 +5,13 @@
  */
 package algorithmsimulator;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.Arrays;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,15 +24,42 @@ public class Simulator extends javax.swing.JFrame {
      */
     SelectionSort s;
     public Simulator(int array[]) {
-        initComponents();
         s=new SelectionSort(array);
+        initComponents();
+        Color c;
         
     }
     
+    public void paintComponent(Graphics gg) {
+//        super.paintComponent(gg);
+        Graphics2D g=(Graphics2D) gg;
+        g.setColor(Color.white);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+        int arr[]=s.arr_algo;
+        int point1=s.selectedIndex1;
+        int point2=s.selectedIndex2;
+        int point3=s.selectedIndex3;
+        for(int x=0;x<arr.length;x++){
+            g.drawString(String.valueOf(arr[x]), 50*x, 50);
+        }
+        g.setStroke(new BasicStroke(5));
+        g.drawLine(point1*50, 51, point1+10, 51);
+        g.drawLine(point2*50, 51, point2+10, 51);
+        g.drawLine(point3*50, 51, point3+10, 51);
+        
+        g.dispose();
+        System.out.println("Repainted");
+    }
+    
+    
+    
     public void refresh(){
+        jPanel1.repaint();
         jTextArea1.setText("");
         jTextArea2.setText("");
-        jTextArea3.setText("");
+//        jTextArea3.setText("");
         int currentLine=s.currentLine;
         int prevLine=s.previousLine;
         
@@ -37,7 +70,7 @@ public class Simulator extends javax.swing.JFrame {
             jTextArea1.append(appendString+"\n");
         }
         for(String x:s.stepSolutions){
-            jTextArea3.append(x+"\n");
+//            jTextArea3.append(x+"\n");
         }
 //        jLabel1.setText(Arrays.toString(s.arr_algo));
         
@@ -67,8 +100,42 @@ public class Simulator extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        jPanel1 = new JPanel(){
+            public void paintComponent(Graphics gg) {
+                //        super.paintComponent(gg);
+                Graphics2D g=(Graphics2D) gg;
+                g.setColor(Color.white);
+                g.fillRect(0, 0, this.getWidth(), this.getHeight());
+                g.setColor(Color.BLACK);
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+                int arr[]=s.arr_algo;
+                int point1=s.selectedIndex1;
+                int point2=s.selectedIndex2;
+                int point3=s.selectedIndex3;
+                for(int x=0;x<arr.length;x++){
+                    g.drawString(String.valueOf(arr[x]), 50*x, 50);
+                }
+                g.setStroke(new BasicStroke(3));
+
+                g.setColor(new Color(255,0,0,127));
+                g.fillRect(point1*50,30,15,25);
+
+                g.setColor(Color.GREEN);
+                g.drawRect(point2*50-4,26,19,29);
+
+                if(s.selectSwapNumber){
+                    g.setColor(new Color(0,0,255,127));
+                    g.fillRect(point3*50-8,22,26,38);
+                }
+                else{
+                    g.setColor(Color.BLUE);
+                    g.drawRect(point3*50-8,22,26,38);
+                }
+
+                g.dispose();
+                System.out.println("Repainted");
+            }
+        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,9 +154,16 @@ public class Simulator extends javax.swing.JFrame {
             }
         });
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 328, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,7 +179,7 @@ public class Simulator extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
@@ -116,9 +190,9 @@ public class Simulator extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(jScrollPane3)
-                        .addGap(18, 18, 18)
+                        .addGap(42, 42, 42)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
                         .addGap(37, 37, 37))
                     .addGroup(layout.createSequentialGroup()
@@ -172,11 +246,10 @@ public class Simulator extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
     // End of variables declaration//GEN-END:variables
 }
